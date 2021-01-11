@@ -23,12 +23,13 @@ export default class Drum extends React.Component {
   }
 
   playSound() {
-    const sound = document.getElementById(this.props.id);
+    const sound = document.getElementById(this.props.label);
     if (sound) {
       this.setActive(true);
       sound.currentTime = 0;
       sound.play();
       setTimeout(() => this.setActive(false), 300);
+      this.props.pressed(this.props.label);
     }
   }
 
@@ -38,10 +39,11 @@ export default class Drum extends React.Component {
 
   render() {
     return (
-      <div className={`drum-button ${this.state.active ? 'active' : ''}`} onClick={this.playSound.bind(this)}>
+      <div className={`drum-pad ${this.state.active ? 'active' : ''}`} id={this.props.id} onClick={this.playSound.bind(this)}>
           {this.props.label}
           <audio
-            id={this.props.id}
+            className="clip"
+            id={this.props.label}
             src={this.props.sound}
           />
       </div>
